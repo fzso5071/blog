@@ -1,0 +1,30 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ] # 或者是你的默认分支名称
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup and Build
+      run: |
+        # 这里可以添加任何构建步骤，比如运行npm或python脚本来构建你的HTML文件
+        # 例如，如果你使用Jekyll，你可能需要添加 "bundle exec jekyll build"
+        # 但如果是简单的HTML文件，这一步可能不需要任何命令
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./ # 这里应替换为你的构建输出目录，例如，_site对于Jekyll
+        # 如果你的仓库是public的，你可以省略publish_branch和publish_dir，使用默认值
+        # publish_branch: gh-pages # 默认分支
+        # publish_dir: ./_site
+        # 如果你的项目是private的，你可能需要使用personal access token
+        # personal_token: ${{ secrets.PERSONAL_TOKEN }}
